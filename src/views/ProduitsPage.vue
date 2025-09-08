@@ -569,7 +569,6 @@
 
             <div class="formInput">
             
-<<<<<<< HEAD
               <input 
                 v-model="order.telephone" 
                 type="tel" 
@@ -581,9 +580,6 @@
                 @input="order.telephone = order.telephone.replace(/\D/g, '')"
               />
 
-=======
-              <input v-model="order.telephone" type="tel" class="w-full p-2 border rounded" required @blur="getCustomer"/>
->>>>>>> a2da8cf0bae37ce7b3e163b25a7a7826d312d900
               <label class="block text-sm font-medium">
                 
                 {{ language.arabic.phone }}
@@ -829,33 +825,11 @@
 import { ref, onMounted, computed, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import lottie from 'lottie-web'
-import useApi from '../composables/useApi.js'
 
 // Routing
 const route = useRoute()
 const router = useRouter()
-const { get, post } = useApi()
 
-<<<<<<< HEAD
-// API Composables
-const { execute: getProducts, data: productsData, loading: productsLoading } = useApi('getProducts')
-const { execute: getDeliveryMethod, loading: deliveryMethodLoading } = useApi('getDeliveryMethod')
-const { execute: getCommuneApi, loading: communeLoading } = useApi('getCommune', { method: 'POST' })
-const { execute: getAndersonCommune, loading: andersonCommuneLoading } = useApi('getAndersonCommune', { method: 'POST' })
-const { execute: getYalidineCommune, loading: yalidineCommuneLoading } = useApi('getYalidineCommune', { method: 'POST' })
-const { execute: getGuepexCommune, loading: guepexCommuneLoading } = useApi('getGuepexCommune', { method: 'POST' })
-const { execute: getUpsFees, loading: upsFeesLoading } = useApi('getUpsFees')
-const { execute: getAndersonFees, loading: andersonFeesLoading } = useApi('getAndersonFees')
-const { execute: getYalidineFees, loading: yalidineFeesLoading } = useApi('getYalidineFees')
-const { execute: getGuepexFees, loading: guepexFeesLoading } = useApi('getGuepexFees')
-const { execute: getStoreDelivery, loading: storeDeliveryLoading } = useApi('getStoreDelivery')
-const { execute: getCustomerApi, data: customerResult } = useApi('getCustomers', { method: 'POST' })
-const { execute: testDiscountApi, data: discountResult, loading: discountLoading } = useApi('testDiscount', { method: 'POST' })
-const { execute: postOrder, data: orderResult, loading: orderLoading } = useApi('postOrder', { method: 'POST' })
-const { execute: productClick } = useApi('productClick', { method: 'POST' })
-const { execute: viewPage } = useApi('viewPage', { method: 'POST' })
-=======
->>>>>>> a2da8cf0bae37ce7b3e163b25a7a7826d312d900
 
 // State
 const isUpdating = ref(false)
@@ -896,25 +870,6 @@ const deliveryMethod = ref()
 const wilIndex = ref()
 const delIndex = ref()
 
-<<<<<<< HEAD
-const isUpdating = computed(() => {
-  return productsLoading.value ||
-    deliveryMethodLoading.value ||
-    communeLoading.value ||
-    andersonCommuneLoading.value ||
-    yalidineCommuneLoading.value ||
-    guepexCommuneLoading.value ||
-    upsFeesLoading.value ||
-    andersonFeesLoading.value ||
-    yalidineFeesLoading.value ||
-    guepexFeesLoading.value ||
-    storeDeliveryLoading.value ||
-    discountLoading.value ||
-    orderLoading.value
-})
-
-=======
->>>>>>> a2da8cf0bae37ce7b3e163b25a7a7826d312d900
 // Langues
 const language = ref({
   french: {
@@ -1006,9 +961,9 @@ async function productClick() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-
+                
     //const result = await response.json();
-
+    
   } catch (error) {
     console.error('Une erreur est survenue:', error)
   }
@@ -1026,9 +981,9 @@ async function viewPage() {
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
 
-
+                
     //const result = await response.json();
-
+    
   } catch (error) {
     console.error('Une erreur est survenue:', error)
   }
@@ -1051,7 +1006,7 @@ onMounted(async () => {
 
   window.addEventListener('scroll', handleScroll)
 
-
+  
 
   selectDetails(false, 0)
   selectedQty.value = 0
@@ -1079,7 +1034,7 @@ onMounted(async () => {
       });
     }
   });
-
+  
 })
 
 function calcQty() {
@@ -1094,8 +1049,8 @@ function calcQty() {
 function chosedDetails(index) {
 
   selectedQty.value = index
-
-
+  
+  
 }
 
 let isProcessing = false // pour éviter les appels récursifs accidentels
@@ -1153,7 +1108,7 @@ function selectDetails(isUpd, index) {
       qty: 1,
       indx: detailId
     }
-
+    
     if (index && typeof index === 'number') {
       selectedQty.value = index
     }
@@ -1163,9 +1118,9 @@ function selectDetails(isUpd, index) {
         selected.value.push(itemData)
       } else {
 
-
+          
         if (isUpd) {
-
+          
 
           const existing = selected.value[selectedQty.value]
           if (existing) {
@@ -1242,14 +1197,14 @@ function setWilaya(wil) {
 
           break
         }
-
+        
       }
     }
     getCommune(wil)
-
+    
 
   }
-
+  
 }
 
 function setCommune(com) {
@@ -1265,6 +1220,7 @@ function setCommune(com) {
   } else {
     isDesk.value = true
   }
+  console.log('com.wilaya_id: ', com.wilaya_id)
   getDeliveryFees(com.wilaya_id)
 
   for(var index in deliveryFees.value) {
@@ -1272,12 +1228,12 @@ function setCommune(com) {
       selectedFees.value = deliveryFees.value[index]
       break
     }
-
+    
   }
 
   calculerPrix();
-
-
+  
+  
 }
 
 
@@ -1289,7 +1245,7 @@ async function removeQtySelect (i) {
   if(selected.value[i] && selected.value[i].qty > 1) {
     selected.value[i].qty--;
   } else if (i > 0) {
-
+    
 
     await new Promise(resolve => setTimeout(resolve, 100)); // pause de 0.5s
     selectedQty.value = i - 1;
@@ -1297,13 +1253,13 @@ async function removeQtySelect (i) {
   }
 
   calcQty()
-
+  
 }
 
 function calculerPrix() {
-
+  
   if(selectedWilaya.value) {
-
+    
     if (deliveryIndex.value === 0 && selectedFees.value.tarif) {
       prixFees.value = parseFloat(selectedFees.value.tarif)
     } else if (deliveryIndex.value != 0 && selectedFees.value.tarif_stopdesk) {
@@ -1321,7 +1277,7 @@ function calculerPrix() {
       } else {
         prixQty.value += i.total * i.qty
       }
-
+      
     }
     //prixQty.value = order.value.qty * productList.value[indexed.value].models[productIndex.value].sell
     prixTotal.value = prixQty.value + prixFees.value
@@ -1332,10 +1288,10 @@ function calculerPrix() {
 
 function setDelivery(i) {
   deliveryIndex.value = i
-
+  
   setUpMethod(selectedWilaya.value)
-
-
+  
+  
   calculerPrix()
 }
 
@@ -1343,7 +1299,7 @@ function setDelivery(i) {
 function submitOrder() {
   productClick()
   saveOrder()
-
+  
   // Tu peux ensuite faire un fetch vers ton backend ici si tu veux enregistrer la commande
 }
 
@@ -1356,7 +1312,7 @@ function setColor(index) {
   colorIndex.value = index
   selectedColor.value = colors.value[index]
   selectDetails(true, selectedQty.value)
-
+  
 }
 
 function setSize(index) {
@@ -1367,72 +1323,120 @@ function setSize(index) {
 
 
 async function getDelivery() {
-  await getStoreDelivery();
+  
+  /*
+    try {
+    const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getUpsWilaya')
 
-  const response = await get('getDeliveryMethod');
-  if (response && response.success) {
-    let myWilaya;
-    const delivery = response.data.find(d => d.delivery_name === deliveryMethod.value);
-
-    if (delivery) {
-      myWilaya = JSON.parse(delivery.delivery_info);
+    if (!response.ok) {
+      console.error('Erreur lors de la récupération des produits:', response.statusText)
+      return
     }
 
-    if (myWilaya) {
-      wilayas.value = [];
-      deliveryFees.value = [];
-      for (const w of myWilaya) {
-        if (w.wilaya_active) {
-          const wilaya_id = w.wilaya_id || w.id;
-          const wilaya_name = w.wilaya_name || w.name;
+    const result = await response.json()
+    wilayas.value = result
+    console.log('wilayas.value: ', wilayas.value)
+    
+  } catch (error) {
+    console.error('Une erreur est survenue:', error)
+  }
+*/
+  await getStoreDelivery()
 
-          wilayas.value.push({
-            wilaya_id: wilaya_id,
-            wilaya_name: wilaya_name,
-            desk_method: w.delivery_desk,
-            home_method: w.delivery_home,
-          });
+  try {
+    const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getDeliveryMethod')
 
-          deliveryFees.value.push({
-            wilaya_id: wilaya_id,
-            tarif: w.home_price,
-            tarif_stopdesk: w.desk_price,
-            desk_active: w.desk_active,
-            home_active: w.home_active,
-          });
-        }
+    if (!response.ok) {
+      console.error('Erreur lors de la récupération des produits:', response.statusText)
+      return
+    }
+
+    const result = await response.json()
+    var myWilaya
+    console.log(result.data)
+    for(var d in result.data) {
+      console.log(result.data[d].delivery_name, ' ', deliveryMethod.value)
+      if(result.data[d].delivery_name === deliveryMethod.value) {
+        
+        myWilaya = JSON.parse(result.data[d].delivery_info)
+        
+        break
       }
+      
     }
+
+    console.log({myWilaya})
+
+    for(var i = 0; i < myWilaya.length; i++) {
+      if(myWilaya[i].wilaya_active) {
+          wilayas.value.push({wilaya_id: myWilaya[i].wilaya_id, wilaya_name: myWilaya[i].wilaya_name, desk_method: myWilaya[i].delivery_desk, home_method: myWilaya[i].delivery_home})
+          console.log('myWilaya[i]: ', myWilaya[i])
+          deliveryFees.value.push({wilaya_id: myWilaya[i].wilaya_id, tarif: myWilaya[i].home_price, tarif_stopdesk: myWilaya[i].desk_price, desk_active: myWilaya[i].desk_active, home_active: myWilaya[i].home_active})
+        }
+      
+    }
+
+    
+  } catch (error) {
+    console.error('Une erreur est survenue:', error)
   }
 }
 
 async function getCommune(wilaya) {
-  if (wilaya.home_method === 'custom') {
-    municipalitys.value = [];
-    return;
-  }
-  selectedWilaya.value = wilaya;
+  if(wilaya.home_method != 'custom')  {
+    selectedWilaya.value = wilaya
+    const id = {
+      wilaya_id: wilaya.wilaya_id
+    };
+    var response
+    var result
+    if(wilaya.home_method  === 'ups') {
+      response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=getCommune", {
+        method: "POST",
+        body: JSON.stringify(id)
+      });
+      result = await response.json();
+    } else if (wilaya.home_method  === 'anderson') {
+      response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=getAndersonCommune", {
+        method: "POST",
+        body: JSON.stringify(id)
+      });
+      result = await response.json();
+    } else if (wilaya.home_method  === 'yalidine') {
+      response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=getYalidineCommune", {
+        method: "POST",
+        body: JSON.stringify(id)
+      });
+      result = await response.json();
+    } else if (wilaya.home_method  === 'guepex') {
+      response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=getGuepexCommune", {
+        method: "POST",
+        body: JSON.stringify(id)
+      });
+      result = await response.json();
+    }
+    try {
 
-  const communeActions = {
-    ups: 'getCommune',
-    anderson: 'getAndersonCommune',
-    yalidine: 'getYalidineCommune',
-    guepex: 'getGuepexCommune',
-  };
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+                
+      municipalitys.value = result
+      
+      //selectedFees.value = deliveryFees.value[wilaya.wilaya_id - 1]
 
-  const action = communeActions[wilaya.home_method];
-  if (!action) return;
-
-  const result = await post(action, { wilaya_id: wilaya.wilaya_id });
-
-  if (result) {
-    const communes = result.data?.data || result;
-    municipalitys.value = communes;
-
-    if (communes && communes.length > 0) {
-      setCommune(communes[0]);
+      if(municipalitys.value.data) {
+        setCommune(municipalitys.value.data.data[0])
+        municipalitys.value = result.data.data
+      } else {
+        setCommune(municipalitys.value[0])
+      }
+    
+    } catch (error) {
+      console.error('Une erreur est survenue:', error)
     }
   }
+
 }
 
 function setUpMethod(id) {
@@ -1442,14 +1446,14 @@ function setUpMethod(id) {
       delIndex.value = index
       break
     }
-
+    
   }
   for(var index2 in wilayas.value) {
     if(wilayas.value[index2].wilaya_id === id) {
       wilIndex.value = index2
       break
     }
-
+    
   }
 
   if(wilayas.value[wilIndex.value].home_method && !deliveryIndex.value) {
@@ -1461,43 +1465,159 @@ function setUpMethod(id) {
 }
 
 async function getDeliveryFees(id) {
-  setUpMethod(id);
 
-  const actionMap = {
-    ups: { action: 'getUpsFees', type: 'wilaya' },
-    anderson: { action: 'getAndersonFees', type: 'wilaya' },
-    yalidine: { action: 'getYalidineFees', type: 'commune', params: { wilaya_id: selectedWilaya.value?.wilaya_id } },
-    guepex: { action: 'getGuepexFees', type: 'commune', params: { wilaya_id: selectedWilaya.value?.wilaya_id } },
-  };
+  var response
+  var result
+  //i hope i can touch you ther
+  //the secret place i want to see, to touch
+  //i can't believe my head my heart
+  //all my sensation standing up
+  //give me pleas this little thing
+  //forgive me my room
+  //i can't hear you any more, i can't hear you any moooooore, any more
 
-  const methodInfo = actionMap[deliveryMethod.value];
-  if (!methodInfo) return;
+  
 
-  const result = await get(methodInfo.action, methodInfo.params);
-  if (!result || !result.success) return;
+  setUpMethod(id)
+  
 
-  const feeData = (methodInfo.type === 'wilaya') ? result.livraison : result.data.per_commune;
+  if(deliveryMethod.value === 'ups') {
+    try {
+      response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getUpsFees')
+    } catch (e) {
+      console.log(e)
+    }
+    if (!response.ok) {
+      console.error(response.statusText)
+      return
+    }
+    result = await response.json()
 
-  if (feeData) {
-    const currentFee = deliveryFees.value[delIndex.value];
-    if (!currentFee) return;
+    if(deliveryFees.value[delIndex.value]['desk_active']) {
+      if(!deliveryFees.value[delIndex.value]['tarif_stopdesk']) {
+        for(let res of result['livraison']) {
+          if(res.wilaya_id === deliveryFees.value[delIndex.value]['wilaya_id']) {
+            deliveryFees.value[delIndex.value]['tarif_stopdesk'] = res['tarif_stopdesk']
+            break
+          }
+        }
+      }
+    }
+    if(deliveryFees.value[delIndex.value]['home_active']) {
+      if(!deliveryFees.value[delIndex.value]['tarif']) {
+        for(let res of result['livraison']) {
+          if(res.wilaya_id === deliveryFees.value[delIndex.value]['wilaya_id']) {
+            deliveryFees.value[delIndex.value]['tarif'] = res['tarif']
+            break
+          }
+        }
+      }
+    }
+    
+  } else if(deliveryMethod.value === 'anderson') {
+    try {
+      response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getAndersonFees')
+    } catch (e) {
+      console.log(e)
+    }
+    if (!response.ok) {
+      console.error(response.statusText)
+      return
+    }
+    result = await response.json()
 
-    let fee;
-    if (methodInfo.type === 'wilaya') {
-      fee = feeData.find(f => f.wilaya_id === currentFee.wilaya_id);
-    } else { // commune
-      fee = feeData.find(f => f.commune_name === selectedMunicipality.value);
+    if(deliveryFees.value[delIndex.value]['desk_active']) {
+      if(!deliveryFees.value[delIndex.value]['tarif_stopdesk']) {
+        for(let res of result['livraison']) {
+          if(res.wilaya_id === deliveryFees.value[delIndex.value]['wilaya_id']) {
+            deliveryFees.value[delIndex.value]['tarif_stopdesk'] = res['tarif_stopdesk']
+            break
+          }
+        }
+      }
+    }
+    if(deliveryFees.value[delIndex.value]['home_active']) {
+      if(!deliveryFees.value[delIndex.value]['tarif']) {
+        for(let res of result['livraison']) {
+          if(res.wilaya_id === deliveryFees.value[delIndex.value]['wilaya_id']) {
+            deliveryFees.value[delIndex.value]['tarif'] = res['tarif']
+            break
+          }
+        }
+      }
+    }
+  } else if(deliveryMethod.value === 'yalidine') {
+    
+    const response = await fetch(`https://zoxcom.pietycloth.com/backend/api.php?action=getYalidineFees&wilaya_id=${selectedWilaya.value['wilaya_id']}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    result = await response.json()
+
+    if(deliveryFees.value[delIndex.value]['desk_active']) {
+      if(!deliveryFees.value[delIndex.value]['tarif_stopdesk']) {
+        for(let res in result.data.per_commune) {
+          if(result.data.per_commune[res].commune_name === selectedMunicipality.value) {
+            deliveryFees.value[delIndex.value]['tarif_stopdesk'] = result.data.per_commune[res]['express_desk']
+            break
+          }
+        }
+      }
+    }
+    if(deliveryFees.value[delIndex.value]['home_active']) {
+      if(!deliveryFees.value[delIndex.value]['tarif']) {
+        for(let res in result.data.per_commune) {
+          if(result.data.per_commune[res].commune_name === selectedMunicipality.value) {
+            deliveryFees.value[delIndex.value]['tarif'] = result.data.per_commune[res]['express_home']
+            break
+          }
+        }
+      }
     }
 
-    if (fee) {
-      if (currentFee.desk_active && !currentFee.tarif_stopdesk) {
-        currentFee.tarif_stopdesk = fee.tarif_stopdesk || fee.express_desk;
+  } else if (deliveryMethod.value === 'guepex') {
+    try {
+      response = await fetch(`https://zoxcom.pietycloth.com/backend/api.php?action=getGuepexFees&wilaya_id=${selectedWilaya.value['wilaya_id']}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
       }
-      if (currentFee.home_active && !currentFee.tarif) {
-        currentFee.tarif = fee.tarif || fee.express_home;
+    });
+    } catch (e) {
+      console.log(e)
+    }
+
+    result = await response.json()
+
+    if(deliveryFees.value[delIndex.value]['desk_active']) {
+      if(!deliveryFees.value[delIndex.value]['tarif_stopdesk']) {
+        for(let res in result.data.per_commune) {
+          if(result.data.per_commune[res].commune_name === selectedMunicipality.value) {
+            deliveryFees.value[delIndex.value]['tarif_stopdesk'] = result.data.per_commune[res]['express_desk']
+            break
+          }
+        }
+      }
+    }
+    if(deliveryFees.value[delIndex.value]['home_active']) {
+      if(!deliveryFees.value[delIndex.value]['tarif']) {
+        for(let res in result.data.per_commune) {
+          if(result.data.per_commune[res].commune_name === selectedMunicipality.value) {
+            deliveryFees.value[delIndex.value]['tarif'] = result.data.per_commune[res]['express_home']
+            break
+          }
+        }
       }
     }
   }
+
+  
+  //deliveryFees.value = result['livraison']
+    
+
 }
 
 
@@ -1540,7 +1660,7 @@ function setModel(index) {
               index: ii,
               color_name: productList.value[indexed.value].models[index].details[ii].colorName,
               color: productList.value[indexed.value].models[index].details[ii].color
-
+              
             })
             sizes.value.push({
               modelIndex: index,
@@ -1550,12 +1670,12 @@ function setModel(index) {
           }
 
       }
-
+      
     }
 
     setColor(0)
     setSize(0)
-
+    
     calculerPrix()
 }
 
@@ -1619,7 +1739,7 @@ async function saveOrder() {
     return
   }
 
-
+  
   //saveLog.value = 'Saving order, please wait...';
   /*if (!name.value || !phone.value || !qty.value || !country.value || !method.value.name) {
       saveLog.value = 'Please fill in all required fields.';
@@ -1636,7 +1756,7 @@ async function saveOrder() {
       } else {
         selectedColor.value = ''
       }
-
+      
     }
   } else {
     selectedColor.value = ''
@@ -1654,14 +1774,14 @@ async function saveOrder() {
     selectedSize.value = ''
   }
 
-
+  
 
   const selectedModel = []
   for(var m of selected.value) {
     selectedModel.push({
-
-      name: m.modal_name,
-      image: m.catalog_image,
+    
+      name: m.modal_name, 
+      image: m.catalog_image, 
       qty: 1,
       price: parseFloat(m.total),
       ref: model.ref,
@@ -1671,10 +1791,10 @@ async function saveOrder() {
       idP: indexed.value,
       idM: m.indx ?? 0,
       selected: [{
-        color: m.color,
-        colorName: m.colorName,
+        color: m.color, 
+        colorName: m.colorName, 
         size: m.size,
-        id: m.id,
+        id: m.id, 
         indx: m.indx ?? 0,
         total: m.total,
         promo: m.promo,
@@ -1738,15 +1858,15 @@ async function saveOrder() {
           method: "POST",
           body: JSON.stringify(orderData)
       });
-
+      
       if (!response.ok) {
         isUpdating.value = false;
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
       const result = await response.json()
-
-
+      
+      
 
       if (result.success) {
         isUpdating.value = false;
@@ -1763,7 +1883,7 @@ async function saveOrder() {
           content_type: 'product'
         });
         }
-
+        
 
         router.push(`/thenks/${result.data}`); // ← Redirection avec ID
       } else {
@@ -1779,14 +1899,14 @@ async function saveOrder() {
 }
 
 async function testDiscount() {
-
+  
   if (order.value.discount) {
       const postBody = JSON.stringify({
           code: order.value.discount,
           time: Math.floor(Date.now() / 1000),
           phone: order.value.telephone
       });
-
+      
       prixTotal.value = prixQty.value + parseFloat(prixFees.value);
 
       const response2 = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=testDiscount', {
@@ -1850,7 +1970,7 @@ async function testDiscount() {
                   isSuccess.value = 0
               }
           }
-
+        
 
       } else {
           if (textResponse.message === '2') {
@@ -1875,7 +1995,7 @@ async function testDiscount() {
                   disLog.value = 'معذرة لا يوجد رمز ترويجي';
                   isSuccess.value = 0
               }
-
+                  
       }
   } else {
       //order.value.discount = 0;
@@ -1889,13 +2009,34 @@ async function testDiscount() {
 
 
 const getStoreDelivery = async () => {
-  const response = await get('getStoreDelivery');
-  if (response && response.success) {
-    const store = response.data.find(dev => dev.name === 'Clothing of Piety');
-    if (store) {
-      deliveryMethod.value = store.method;
-    }
+
+
+  //isSaving.value = true
+
+  const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getStoreDelivery', {
+    method: 'GET',
+  });
+
+  if (!response.ok) {
+    return;
   }
+
+  const textResponse = await response.json();
+
+  if (textResponse.success) {
+    
+    for (var dev of textResponse.data) {
+      if(dev.name === 'Clothing of Piety') {
+        deliveryMethod.value = dev.method
+      }
+
+      break
+    }
+
+  }
+
+
+
 }
 
 const getCustomer = async () => {
@@ -1903,7 +2044,7 @@ const getCustomer = async () => {
 
   //isSaving.value = true
 
-  const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getCustomer', {
+  const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getCustomers', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -1922,32 +2063,32 @@ const getCustomer = async () => {
     const customer = textResponse.data[0]
     if(customer.name) {
       order.value.nom = customer.name
-
+      
       order.value.adresse = customer.items[0].mZone
       await getDelivery()
       for (var wil of wilayas.value) {
         if (
           normalizeString(wil.wilaya_name) === normalizeString(customer.items[0].delivery_zone)
         ) {
-
+          
           order.value.wilaya = wil
           setWilaya(order.value.wilaya)
           await getCommune(order.value.wilaya)
           for(var mun of municipalitys.value) {
             if(customer.items[0].sZone === mun.nom) {
-
+              
               order.value.municipality = mun
               setCommune(mun)
-
+              
             }
           }
-
+          
           break // on arrête dès qu'on trouve
         }
       }
-
-
-
+      
+      
+      
       calculerPrix()
     }
 

@@ -32,14 +32,7 @@ export default function useApi() {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-<<<<<<< HEAD
-
-      data.value = await response.json();
-
-      console.log('data.value: ', data.value)
-=======
       return await response.json();
->>>>>>> a2da8cf0bae37ce7b3e163b25a7a7826d312d900
     } catch (e) {
       error.value = e.message;
       console.error(`API call failed for action ${action}:`, e);
