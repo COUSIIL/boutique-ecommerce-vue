@@ -4,7 +4,7 @@
 
     
     
-    <div v-if="route.params.id && !isUpdating && found" :id="route.params.id" style="width: 100%; display: flex; justify-content: center; align-items: center; flex-direction: column; margin-top: 20px;">
+    <div v-if="route.params.id && !isUpdating && found" :id="route.params.id" class="product-container">
       
       <p class="title">
         {{ productList[indexed].name }}
@@ -44,7 +44,7 @@
 
           </div>
 
-          <div class="list2" style="height: 160px;">
+          <div class="list2 list-height">
         
             <div v-for="(catalog, index) in productList[indexed].catalog"
               :key="index"
@@ -78,13 +78,13 @@
             </div>
           </div>
         </div>
-        <div style="display: flex; align-items: center; flex-direction: column;">
+        <div class="flex-column-center">
           <div class="selector">
 
           <div v-if="productList[indexed].models.length > 1">
                 إختر المنتوج
 
-                <div class="list2" style="height: 160px;">
+                <div class="list2 list-height">
                   <div
                     v-for="(product, index) in productList[indexed].models"
                     :key="index"
@@ -155,7 +155,7 @@
             <div v-for="(select, index3) in selected" :key="index3">
                 
               <div class="center_column2" @click="chosedDetails(index3)" :class="{ selected_el: selectedQty === index3 }">
-                <div class="center_el" style="margin: 5px;">
+                <div class="center_el margin-5">
                   <img
                     v-if="select.catalog_image"
                     :src="select.catalog_image"
@@ -182,7 +182,7 @@
                     <div class="model-price2">
                       <div class="scroll-wrapper" v-if="select.aColor">
                         <div class="content">
-                          <div :style="{backgroundColor: select.color}" style="width: 10px; height: 10px; border: 1px solid lightGray">
+                          <div :style="{backgroundColor: select.color}" class="color-div">
 
                           </div>
                           <p class="scroll">
@@ -210,7 +210,7 @@
                     <div v-if="select.colorName || select.size" class="model-price2">
                       <div  v-if="select.colorName" class="scroll-wrapper">
                         <div class="content">
-                          <div :style="{backgroundColor: select.color}" style="width: 10px; height: 10px; border: 1px solid lightGray">
+                          <div :style="{backgroundColor: select.color}" class="color-div">
 
                           </div>
                           <p class="scroll">
@@ -231,7 +231,7 @@
                   </div>
                 </div>
 
-                <div class="center_el" style="margin: 5px;">
+                <div class="center_el margin-5">
 
                   <div v-if="parseInt(select.promo) != 0" class="price-display">
                     <p class="old-price">{{ select.total }} DA</p>
@@ -239,7 +239,7 @@
                     
                   </div>
                   <div v-else>
-                    <p class="promo-price" style="margin-block: 5px; background-color: greenyellow;">{{ select.total }} DA</p>
+                    <p class="promo-price promo-price-green">{{ select.total }} DA</p>
                   </div>
 
 
@@ -252,7 +252,7 @@
                     </button>
                     <div class="formInput">
                   
-                      <input v-if="select.qty" v-model="select.qty" type="number" min="1" step="1" class="w-full p-2 border rounded" style="max-width: 60px;" required @change="calculerPrix"/>
+                      <input v-if="select.qty" v-model="select.qty" type="number" min="1" step="1" class="w-full p-2 border rounded input-qty" required @change="calculerPrix"/>
                     </div>
 
                     <button type="button" class="qtyBtn" @click="removeQtySelect(index3)">
@@ -288,7 +288,7 @@
    
         </div>
 
-        <div style="width: 100%; display: flex; justify-content: center; align-items: center;">
+        <div class="form-container">
             <form v-if="selected.length < 2 && !colors.length && !sizes.length" @submit.prevent="submitOrder">
             
               <div ref="buyNowRef">
@@ -309,7 +309,7 @@
 
                   <div class="formInput">
                   
-                    <input v-model="order.telephone" type="tel" class="w-full p-2 border rounded" required @blur="getCustomer"/>
+                    <input v-model="order.telephone" type="tel" inputmode="numeric" pattern="[0-9]*" class="w-full p-2 border rounded" required @blur="getCustomer"/>
                     <label class="block text-sm font-medium">
                       
                       {{ language.arabic.phone }}
@@ -406,7 +406,7 @@
               
               <div v-if="prixTotal" class="formBox2">
                 <div class="center_el" v-for="(sel, i) in selected" :key="i">
-                  <div class="formInput3" style="width: 100%;">
+                  <div class="formInput3 form-input-full-width">
                   
                     <h3 v-if="sel.promo && sel.promo != 0">
                       {{ sel.promo }} x {{sel.qty}} = {{ sel.promo * sel.qty }} DA
@@ -414,7 +414,7 @@
                     <h3 v-else>
                       {{ sel.total }} x {{sel.qty}} = {{ sel.total * sel.qty }} DA
                     </h3>
-                    <label style="font-size: 1.8vh">
+                    <label class="font-size-1-8">
                       : الكمية
                     </label>
                   </div>
@@ -426,7 +426,7 @@
                   <h3>
                     {{ prixQty }} DA
                   </h3>
-                  <label style="font-size: 1.8vh">
+                  <label class="font-size-1-8">
                     : سعر الكمية
                   </label>
                 </div-->
@@ -436,13 +436,13 @@
                   <h3>
                     {{ prixFees }} DA
                   </h3>
-                  <label style="font-size: 1.8vh">
+                  <label class="font-size-1-8">
                     : سعر التوصيل
                   </label>
                 </div>
 
                 
-                <div class="formInput" style="margin-top: 20px;">
+                <div class="formInput margin-top-20">
                 
                   <input v-model="order.discount" @blur="testDiscount" type="text" class="w-full p-2 border rounded"/>
                   <label class="block text-sm font-medium">
@@ -495,7 +495,7 @@
                   <h2>
                     {{ prixTotal }} DA
                   </h2>
-                  <label style="font-size: 1.8vh">
+                  <label class="font-size-1-8">
                     : سعر الكلي
                   </label>
                 </div>
@@ -509,7 +509,7 @@
                     <path d="M14 19C14 19 15 19 16 21C16 21 19.1765 16 22 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     <path d="M6.5 11L10 3M15 3L17.5 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
                 </svg>
-                <h2 style="font-weight: bold; color: white; font-size: 24px;">
+                <h2 class="buy-now-text">
                   {{ language.arabic.buyNow }}
                 </h2>
                   
@@ -569,7 +569,7 @@
 
             <div class="formInput">
             
-              <input v-model="order.telephone" type="tel" class="w-full p-2 border rounded" required @blur="getCustomer"/>
+              <input v-model="order.telephone" type="tel" inputmode="numeric" pattern="[0-9]*" class="w-full p-2 border rounded" required @blur="getCustomer"/>
               <label class="block text-sm font-medium">
                 
                 {{ language.arabic.phone }}
@@ -665,7 +665,7 @@
         
         <div v-if="prixTotal" class="formBox2">
           <div class="center_el" v-for="(sel, i) in selected" :key="i">
-            <div class="formInput3" style="width: 100%;">
+            <div class="formInput3 form-input-full-width">
             
               <h3 v-if="sel.promo && sel.promo != 0">
                 {{ sel.promo }} x {{sel.qty}} = {{ sel.promo * sel.qty }} DA
@@ -673,7 +673,7 @@
               <h3 v-else>
                 {{ sel.total }} x {{sel.qty}} = {{ sel.total * sel.qty }} DA
               </h3>
-              <label style="font-size: 1.8vh">
+              <label class="font-size-1-8">
                 : الكمية
               </label>
             </div>
@@ -685,7 +685,7 @@
             <h3>
               {{ prixQty }} DA
             </h3>
-            <label style="font-size: 1.8vh">
+            <label class="font-size-1-8">
               : سعر الكمية
             </label>
           </div-->
@@ -695,13 +695,13 @@
             <h3>
               {{ prixFees }} DA
             </h3>
-            <label style="font-size: 1.8vh">
+            <label class="font-size-1-8">
               : سعر التوصيل
             </label>
           </div>
 
           
-          <div class="formInput" style="margin-top: 20px;">
+          <div class="formInput margin-top-20">
           
             <input v-model="order.discount" @blur="testDiscount" type="text" class="w-full p-2 border rounded"/>
             <label class="block text-sm font-medium">
@@ -754,7 +754,7 @@
             <h2>
               {{ prixTotal }} DA
             </h2>
-            <label style="font-size: 1.8vh">
+            <label class="font-size-1-8">
               : سعر الكلي
             </label>
           </div>
@@ -768,7 +768,7 @@
               <path d="M14 19C14 19 15 19 16 21C16 21 19.1765 16 22 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
               <path d="M6.5 11L10 3M15 3L17.5 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
           </svg>
-          <h2 style="font-weight: bold; color: white; font-size: 24px;">
+          <h2 class="buy-now-text">
             {{ language.arabic.buyNow }}
           </h2>
             
@@ -801,7 +801,7 @@
       
       
 
-      <div style="width: 100%; max-width: 800px; margin-block: 20px;" v-html="formattedDescription"></div>
+      <div class="description-container" v-html="formattedDescription"></div>
 
     </div>
 
@@ -815,14 +815,31 @@
 import { ref, onMounted, computed, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import lottie from 'lottie-web'
+import { useApi } from '@/composables/useApi'
 
 // Routing
 const route = useRoute()
 const router = useRouter()
 
+// API Composables
+const { execute: getProducts, data: productsData, loading: productsLoading } = useApi('getProducts')
+const { execute: getDeliveryMethod, loading: deliveryMethodLoading } = useApi('getDeliveryMethod')
+const { execute: getCommuneApi, loading: communeLoading } = useApi('getCommune', { method: 'POST' })
+const { execute: getAndersonCommune, loading: andersonCommuneLoading } = useApi('getAndersonCommune', { method: 'POST' })
+const { execute: getYalidineCommune, loading: yalidineCommuneLoading } = useApi('getYalidineCommune', { method: 'POST' })
+const { execute: getGuepexCommune, loading: guepexCommuneLoading } = useApi('getGuepexCommune', { method: 'POST' })
+const { execute: getUpsFees, loading: upsFeesLoading } = useApi('getUpsFees')
+const { execute: getAndersonFees, loading: andersonFeesLoading } = useApi('getAndersonFees')
+const { execute: getYalidineFees, loading: yalidineFeesLoading } = useApi('getYalidineFees')
+const { execute: getGuepexFees, loading: guepexFeesLoading } = useApi('getGuepexFees')
+const { execute: getStoreDelivery, loading: storeDeliveryLoading } = useApi('getStoreDelivery')
+const { execute: getCustomerApi, data: customerResult, loading: customerLoading } = useApi('getCustomer', { method: 'POST' })
+const { execute: testDiscountApi, data: discountResult, loading: discountLoading } = useApi('testDiscount', { method: 'POST' })
+const { execute: postOrder, data: orderResult, loading: orderLoading } = useApi('postOrder', { method: 'POST' })
+const { execute: productClick } = useApi('productClick', { method: 'POST' })
+const { execute: viewPage } = useApi('viewPage', { method: 'POST' })
 
 // State
-const isUpdating = ref(false)
 const productList = ref([])
 const municipalitys = ref([])
 const selected = ref([])
@@ -853,12 +870,27 @@ const isSticky = ref(false)
 const waiting = ref(null)
 
 const disLog = ref('')
-//const deliveryList = ref([])
-//const deliveryImage = ref()
 const deliveryMethod = ref()
 
 const wilIndex = ref()
 const delIndex = ref()
+
+const isUpdating = computed(() => {
+  return productsLoading.value ||
+    deliveryMethodLoading.value ||
+    communeLoading.value ||
+    andersonCommuneLoading.value ||
+    yalidineCommuneLoading.value ||
+    guepexCommuneLoading.value ||
+    upsFeesLoading.value ||
+    andersonFeesLoading.value ||
+    yalidineFeesLoading.value ||
+    guepexFeesLoading.value ||
+    storeDeliveryLoading.value ||
+    customerLoading.value ||
+    discountLoading.value ||
+    orderLoading.value
+})
 
 // Langues
 const language = ref({
@@ -912,8 +944,6 @@ const language = ref({
   }
 })
 
-
-
 // Description formattée (HTML)
 const formattedDescription = computed(() => {
   const currentProduct = productList.value[indexed.value]
@@ -923,7 +953,8 @@ const formattedDescription = computed(() => {
 })
 
 const videoId = computed(() => {
-  const url = productList.value[indexed.value].youtubeUrl || ''
+  const url = productList.value[indexed.value]?.youtubeUrl || ''
+  if (!url) return ''
   try {
     const u = new URL(url)
     if (u.hostname.includes('youtu.be')) return u.pathname.slice(1)
@@ -934,76 +965,29 @@ const videoId = computed(() => {
   return url
 })
 
-
 function scrollToBuyNow() {
   buyNowRef.value?.scrollIntoView({ behavior: 'smooth' })
 }
 
-async function productClick() {
-  try {
-
-    const response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=productClick", {
-      method: "POST",
-      body: JSON.stringify({ product_id: parseInt(route.params.id) })
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-                
-    //const result = await response.json();
-    
-  } catch (error) {
-    console.error('Une erreur est survenue:', error)
-  }
-}
-
-async function viewPage() {
-  try {
-
-    const response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=viewPage", {
-      method: "POST",
-      body: JSON.stringify({ product_id: parseInt(route.params.id) })
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-
-                
-    //const result = await response.json();
-    
-  } catch (error) {
-    console.error('Une erreur est survenue:', error)
-  }
-}
-
-
 onMounted(async () => {
-
   lottie.loadAnimation({
     container: waiting.value,
     renderer: 'svg',
     loop: true,
     autoplay: true,
-    path: '/animation/waiting.json', // Chemin relatif ou absolu
+    path: '/animation/waiting.json',
   })
 
-  await getProducts()
+  await fetchProducts()
   await getDelivery()
-  //getDeliveryFees()
 
   window.addEventListener('scroll', handleScroll)
-
-  
 
   selectDetails(false, 0)
   selectedQty.value = 0
 
-  viewPage()
+  viewPage({ product_id: parseInt(route.params.id) })
 
-  // ✅ Envoi événement visite
   if (typeof window.fbq === 'function') {
     window.fbq('track', 'ViewContent', {
       content_name: 'Homepage',
@@ -1013,7 +997,6 @@ onMounted(async () => {
     });
   }
 
-  // ✅ Envoi durée quand l’utilisateur quitte la page
   const startTime = Date.now();
   window.addEventListener('beforeunload', () => {
     const durationSeconds = Math.round((Date.now() - startTime) / 1000);
@@ -1024,26 +1007,539 @@ onMounted(async () => {
       });
     }
   });
-  
 })
 
-function calcQty() {
-  order.value.qty = 0
-  for(var s of selected.value) {
-    order.value.qty += s.qty
+async function fetchProducts() {
+  await getProducts()
+  if (productsData.value && productsData.value.data) {
+    for(var i = 0; i < productsData.value.data.length; i++) {
+      productsData.value.data[i].catalog = [{ image: productsData.value.data[i].image }, ...productsData.value.data[i].catalog];
+    }
+    productList.value = productsData.value.data
+
+    setModel(productIndex.value)
+
+    if(productList.value[indexed.value] && productList.value[indexed.value].youtubeUrl) {
+      productList.value[indexed.value].catalog = [
+        {image: 'https://img.freepik.com/vecteurs-premium/logo-rond-youtube-isole-fond-blanc_469489-983.jpg?semt=ais_hybrid&w=740'},
+        ...productList.value[indexed.value].catalog
+      ]
+      setCatalog(0)
+    }
+  }
+}
+
+function handleScroll() {
+  if (buyNowRef.value) {
+    const rect = buyNowRef.value.getBoundingClientRect()
+    const margin = 300
+    isSticky.value = rect.top > margin || rect.bottom < 0
+  }
+}
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+const order = ref({
+  nom: '',
+  telephone: '',
+  wilaya: '',
+  adresse: '',
+  municipality: '',
+  qty: 1,
+  note: '',
+  discount: ''
+})
+
+const deliveryFees = ref([])
+const selectedFees = ref([])
+const wilayas = ref([])
+var selectedWilaya = ref()
+var selectedMunicipality = ref()
+
+var prixFees = ref()
+var prixQty = ref()
+var prixTotal = ref()
+
+function setWilaya(wil) {
+  if(wil.wilaya_name) {
+    selectedWilaya.value = wil.wilaya_name
+    if(deliveryMethod.value === 'custom') {
+      for(var i = 0; i < deliveryFees.value.length; i++) {
+        if (deliveryFees.value[i].wilaya_id === wil.wilaya_id) {
+          selectedFees.value = deliveryFees.value[i]
+          break
+        }
+      }
+    }
+    getCommune(wil)
+  }
+}
+
+function setCommune(com) {
+  if(com.nom) {
+    selectedMunicipality.value = com.nom
+  } else {
+    selectedMunicipality.value = com.name
+  }
+  if(!com.has_stop_desk) {
+    isDesk.value = false
+  } else {
+    isDesk.value = true
+  }
+  getDeliveryFees(com.wilaya_id)
+
+  for(var index in deliveryFees.value) {
+    if(deliveryFees.value[index].wilaya_id === com.wilaya_id) {
+      selectedFees.value = deliveryFees.value[index]
+      break
+    }
+  }
+  calculerPrix();
+}
+
+function addQtySelect (i) {
+  selected.value[i].qty++;
+  calcQty()
+}
+
+async function removeQtySelect (i) {
+  if(selected.value[i] && selected.value[i].qty > 1) {
+    selected.value[i].qty--;
+  } else if (i > 0) {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    selectedQty.value = i - 1;
+    selected.value.splice(i, 1);
+  }
+  calcQty()
+}
+
+function calculerPrix() {
+  if(selectedWilaya.value) {
+    if (deliveryIndex.value === 0 && selectedFees.value.tarif) {
+      prixFees.value = parseFloat(selectedFees.value.tarif)
+    } else if (deliveryIndex.value != 0 && selectedFees.value.tarif_stopdesk) {
+      prixFees.value = parseFloat(selectedFees.value.tarif_stopdesk)
+    } else if (deliveryIndex.value === 0 && selectedFees.value.express_home) {
+      prixFees.value = parseFloat(selectedFees.value.express_home)
+    } else if (deliveryIndex.value != 0 && selectedFees.value.express_desk) {
+      prixFees.value = parseFloat(selectedFees.value.express_desk)
+    }
+
+    prixQty.value = 0
+    for(var i of selected.value) {
+      if(i.promo && i.promo != 0) {
+        prixQty.value += i.promo * i.qty
+      } else {
+        prixQty.value += i.total * i.qty
+      }
+    }
+    prixTotal.value = prixQty.value + prixFees.value
+  }
+}
+
+function setDelivery(i) {
+  deliveryIndex.value = i
+  setUpMethod(selectedWilaya.value)
+  calculerPrix()
+}
+
+function submitOrder() {
+  productClick({ product_id: parseInt(route.params.id) })
+  saveOrder()
+}
+
+async function saveOrder() {
+  if (!selectedWilaya.value) {
+    alert("يرجى اختيار الولاية")
+    return
+  }
+  if (!order.value.nom) {
+    alert("يرجى إدخال الاسم الكامل")
+    return
+  }
+  if (!order.value.telephone) {
+    alert("يرجى إدخال رقم الهاتف")
+    return
+  }
+  if (!order.value.municipality) {
+    alert("يرجى اختيار البلدية")
+    return
   }
 
+  const model = productList.value[indexed.value].models[productIndex.value]
+  const details = productList.value[indexed.value].models[productIndex.value].details
 
+  if(model.aColor == 1) {
+    if(!selectedColor.value) {
+      if(details) {
+        selectedColor.value = details[0].color
+      } else {
+        selectedColor.value = ''
+      }
+    }
+  } else {
+    selectedColor.value = ''
+  }
+
+  if(model.aSize == 1) {
+    if(!selectedSize.value) {
+      if(details) {
+        selectedSize.value = details[0].size
+      } else {
+        selectedSize.value = ''
+      }
+    }
+  } else {
+    selectedSize.value = ''
+  }
+
+  const selectedModel = []
+  for(var m of selected.value) {
+    selectedModel.push({
+      name: m.modal_name,
+      image: m.catalog_image,
+      qty: 1,
+      price: parseFloat(m.total),
+      ref: model.ref,
+      indexD: productIndex.value,
+      details: [model],
+      total: parseFloat(m.total),
+      idP: indexed.value,
+      idM: m.indx ?? 0,
+      selected: [{
+        color: m.color,
+        colorName: m.colorName,
+        size: m.size,
+        id: m.id,
+        indx: m.indx ?? 0,
+        total: m.total,
+        promo: m.promo,
+        qty: m.qty
+      }]
+    })
+  }
+
+  var zone1 = false
+  var zone2 = false
+
+  if(deliveryIndex.value === 0) {
+    zone1 = true
+    zone2 = false
+  } else {
+    zone1 = false
+    zone2 = true
+  }
+
+  if (Array.isArray(selectedWilaya.value)) {
+    order.value.wilaya = selectedWilaya.value[0]?.wilaya_name || ''
+  } else if (typeof selectedWilaya.value === 'object' && selectedWilaya.value !== null) {
+    order.value.wilaya = selectedWilaya.value.wilaya_name
+  } else {
+    order.value.wilaya = selectedWilaya.value
+  }
+
+  if (Array.isArray(selectedMunicipality.value)) {
+    order.value.municipality = selectedMunicipality.value[0]?.nom || ''
+  } else if (typeof selectedMunicipality.value === 'object' && selectedMunicipality.value !== null) {
+    order.value.municipality = selectedMunicipality.value.nom
+  } else {
+    order.value.municipality = selectedMunicipality.value
+  }
+
+  const orderData = {
+      data_time: Math.floor(Date.now() / 1000),
+      name: order.value.nom,
+      phone: order.value.telephone,
+      qty: order.value.qty,
+      country: 'algeria',
+      method: deliveryMethod.value,
+      select: order.value.wilaya,
+      deliveryValue: `${prixFees.value} DA`,
+      type: zone1 ? "0" : zone2 ? "1" : "",
+      zone1: zone1,
+      zone2: zone2,
+      sZone: order.value.municipality,
+      mZone: order.value.adresse,
+      discount: order.value.discount,
+      discountValue: discount.value,
+      note: order.value.note,
+      total: prixTotal.value,
+      selectedProd: selectedModel,
+  };
+
+  await postOrder(orderData);
+
+  if (orderResult.value && orderResult.value.success) {
+    if (typeof window.fbq === 'function') {
+      window.fbq('track', 'Purchase', {
+        value: prixTotal.value,
+        currency: 'DZD',
+        contents: selectedModel.map(item => ({
+          id: item.ref || item.idP || 'product-id',
+          quantity: item.qty,
+          item_price: item.price
+        })),
+        content_type: 'product'
+      });
+    }
+    router.push(`/thenks/${orderResult.value.data}`);
+  } else {
+    alert("order not saved correctly")
+  }
+}
+
+function clearSizeColor() {
+  colors.value = []
+  sizes.value = []
+}
+
+function setColor(index) {
+  colorIndex.value = index
+  selectedColor.value = colors.value[index]
+  selectDetails(true, selectedQty.value)
+}
+
+function setSize(index) {
+  sizeIndex.value = index
+  selectedSize.value = sizes.value[index]
+  selectDetails(true, selectedQty.value)
+}
+
+async function getDelivery() {
+  await getStoreDelivery()
+  await getDeliveryMethod()
+}
+
+async function getCommune(wilaya) {
+  if(wilaya.home_method != 'custom')  {
+    selectedWilaya.value = wilaya
+    const id = {
+      wilaya_id: wilaya.wilaya_id
+    };
+    if(wilaya.home_method  === 'ups') {
+      await getCommuneApi(id);
+    } else if (wilaya.home_method  === 'anderson') {
+      await getAndersonCommune(id);
+    } else if (wilaya.home_method  === 'yalidine') {
+      await getYalidineCommune(id);
+    } else if (wilaya.home_method  === 'guepex') {
+      await getGuepexCommune(id);
+    }
+  }
+}
+
+function setUpMethod(id) {
+  for(var index in deliveryFees.value) {
+    if(deliveryFees.value[index].wilaya_id === id) {
+      delIndex.value = index
+      break
+    }
+  }
+  for(var index2 in wilayas.value) {
+    if(wilayas.value[index2].wilaya_id === id) {
+      wilIndex.value = index2
+      break
+    }
+  }
+
+  if(wilayas.value[wilIndex.value].home_method && !deliveryIndex.value) {
+    deliveryMethod.value = wilayas.value[wilIndex.value].home_method
+  } else if(wilayas.value[wilIndex.value].desk_method && deliveryIndex.value) {
+    deliveryMethod.value = wilayas.value[wilIndex.value].desk_method
+  }
+}
+
+async function getDeliveryFees(id) {
+  setUpMethod(id)
+
+  if(deliveryMethod.value === 'ups') {
+    await getUpsFees()
+  } else if(deliveryMethod.value === 'anderson') {
+    await getAndersonFees()
+  } else if(deliveryMethod.value === 'yalidine') {
+    await getYalidineFees(`&wilaya_id=${selectedWilaya.value['wilaya_id']}`)
+  } else if (deliveryMethod.value === 'guepex') {
+    await getGuepexFees(`&wilaya_id=${selectedWilaya.value['wilaya_id']}`)
+  }
+}
+
+function setCatalog(index) {
+  catalogIndex.value = index
+  productList.value[indexed.value].image = productList.value[indexed.value].catalog[index].image
+}
+
+function setModel(index) {
+  productIndex.value = index
+  indexed.value = productList.value.findIndex(item => item.id === route.params.id)
+  found.value = indexed.value !== -1
+  if(indexed.value !== -1) {
+    clearSizeColor()
+      for(var ii = 0; ii < productList.value[indexed.value].models[index].details.length; ii++) {
+        if (colors.value) {
+          const colorIndex = colors.value.findIndex(item => item.color === productList.value[indexed.value].models[index].details[ii].color)
+          const sizeIndex = sizes.value.findIndex(item => item.size === productList.value[indexed.value].models[index].details[ii].size)
+          if (colorIndex === -1) {
+            colors.value.push({
+              modelIndex: index,
+              index: ii,
+              color_name: productList.value[indexed.value].models[index].details[ii].colorName,
+              color: productList.value[indexed.value].models[index].details[ii].color
+            })
+          }
+          if (sizeIndex === -1) {
+              sizes.value.push({
+              modelIndex: index,
+              index: ii,
+              size: productList.value[indexed.value].models[index].details[ii].size
+            })
+          }
+        }else {
+          colors.value.push({
+            modelIndex: index,
+            index: ii,
+            color_name: productList.value[indexed.value].models[index].details[ii].colorName,
+            color: productList.value[indexed.value].models[index].details[ii].color
+          })
+          sizes.value.push({
+            modelIndex: index,
+            index: ii,
+            size: productList.value[indexed.value].models[index].details[ii].size
+          })
+        }
+    }
+  }
+  setColor(0)
+  setSize(0)
+  calculerPrix()
+}
+
+async function getCustomer() {
+  await getCustomerApi({ phone: order.value.telephone })
+  if (customerResult.value && customerResult.value.success) {
+    const customer = customerResult.value.data[0]
+    if(customer.name) {
+      order.value.nom = customer.name
+      order.value.adresse = customer.items[0].mZone
+      await getDelivery()
+      for (var wil of wilayas.value) {
+        if (
+          normalizeString(wil.wilaya_name) === normalizeString(customer.items[0].delivery_zone)
+        ) {
+          order.value.wilaya = wil
+          setWilaya(order.value.wilaya)
+          await getCommune(order.value.wilaya)
+          for(var mun of municipalitys.value) {
+            if(customer.items[0].sZone === mun.nom) {
+              order.value.municipality = mun
+              setCommune(mun)
+            }
+          }
+          break
+        }
+      }
+      calculerPrix()
+    }
+  }
+}
+
+async function testDiscount() {
+  if (order.value.discount) {
+    prixTotal.value = prixQty.value + parseFloat(prixFees.value);
+    await testDiscountApi({
+      code: order.value.discount,
+      time: Math.floor(Date.now() / 1000),
+      phone: order.value.telephone
+    })
+    const textResponse = discountResult.value
+    if (textResponse.success) {
+        var type = '';
+        if(textResponse.message === '1' && prixQty.value) {
+            if(textResponse.data.type === 0) {
+                type = '%';
+                discount.value = {value: parseFloat(textResponse.data.value), type: textResponse.data.type};
+                prixTotal.value -= (prixQty.value / 100) * parseFloat(discount.value.value);
+            } else {
+                type = 'DA';
+                discount.value = {value: parseFloat(textResponse.data.value), type: textResponse.data.type};
+                prixTotal.value -= parseFloat(discount.value.value);
+            }
+            discountV.value = `${textResponse.data.value} ${type}`;
+            disLog.value = `CODE : - ${textResponse.data.value} ${type}`;
+            isSuccess.value = 1
+        } else {
+            if (textResponse.message === '1') {
+                    if(textResponse.data.type === 0) {
+                    type = '%';
+                    discount.value = {value: parseFloat(textResponse.data.value), type: textResponse.data.type};
+                    prixTotal.value -= (prixQty.value / 100) * parseFloat(discount.value.value);
+                } else {
+                    type = 'DA';
+                    discount.value = {value: parseFloat(textResponse.data.value), type: textResponse.data.type};
+                    prixTotal.value -= parseFloat(discount.value.value);
+                }
+                discountV.value = `${textResponse.data.value} ${type}`;
+                disLog.value = `CODE : - ${textResponse.data.value} ${type}`;
+                isSuccess.value = 1
+            } else if (textResponse.message === '2') {
+                disLog.value = 'لقد إنتهت مدة الصلحية';
+                isSuccess.value = 0
+            } else if (textResponse.message === '3') {
+                disLog.value = 'لقد إستعملت الرمز بهاتفك';
+                isSuccess.value = 0
+            } else if (textResponse.message === '4') {
+                disLog.value = 'لقد إنتهت صلحية الرمز';
+                isSuccess.value = 0
+            } else if (textResponse.message === '5') {
+                disLog.value = 'رمز غير صالح';
+                isSuccess.value = 0
+            } else if (textResponse.message === '6') {
+                disLog.value = 'رمز غير متوفر';
+                isSuccess.value = 0
+            } else if (textResponse.message === '7') {
+                disLog.value = 'رقم الهاتف مهم';
+                isSuccess.value = 0
+            } else if (textResponse.message === '8') {
+                disLog.value = 'معذرة لا يوجد رمز ترويجي';
+                isSuccess.value = 0
+            }
+        }
+    } else {
+        if (textResponse.message === '2') {
+                disLog.value = 'لقد إنتهت مدة الصلحية'
+                isSuccess.value = 0
+            } else if (textResponse.message === '3') {
+                disLog.value = 'لقد إستعملت الرمز بهاتفك';
+                isSuccess.value = 0
+            } else if (textResponse.message === '4') {
+                disLog.value = 'لقد إنتهت صلحية الرمز';
+                isSuccess.value = 0
+            } else if (textResponse.message === '5') {
+                disLog.value = 'رمز غير صالح';
+                isSuccess.value = 0
+            } else if (textResponse.message === '6') {
+                disLog.value = 'رمز غير متوفر';
+                isSuccess.value = 0
+            } else if (textResponse.message === '7') {
+                disLog.value = 'رقم الهاتف مهم';
+                isSuccess.value = 0
+            } else if (textResponse.message === '8') {
+                disLog.value = 'معذرة لا يوجد رمز ترويجي';
+                isSuccess.value = 0
+            }
+    }
+  } else {
+    disLog.value = 'لا يوجد أي رمز';
+    isSuccess.value = 0
+  }
 }
 
 function chosedDetails(index) {
-
   selectedQty.value = index
-  
-  
 }
 
-let isProcessing = false // pour éviter les appels récursifs accidentels
+let isProcessing = false
 
 function selectDetails(isUpd, index) {
   if (isProcessing) return
@@ -1064,7 +1560,6 @@ function selectDetails(isUpd, index) {
     var detailId
     var newSize
 
-    // Si on a des détails, essayer de faire correspondre couleur + taille
     if (details.length > 0) {
       if (!selectedColor.value) setColor(0)
       if (!selectedSize.value) setSize(0)
@@ -1098,7 +1593,7 @@ function selectDetails(isUpd, index) {
       qty: 1,
       indx: detailId
     }
-    
+
     if (index && typeof index === 'number') {
       selectedQty.value = index
     }
@@ -1107,11 +1602,7 @@ function selectDetails(isUpd, index) {
       if (!isUpd && !selected.value.length) {
         selected.value.push(itemData)
       } else {
-
-          
         if (isUpd) {
-          
-
           const existing = selected.value[selectedQty.value]
           if (existing) {
             itemData.qty = existing.qty
@@ -1122,9 +1613,8 @@ function selectDetails(isUpd, index) {
         }
       }
     } else {
-      // Aucun détail trouvé — suppression éventuelle
       if (!isUpd) {
-        selected.value.push(itemData) // fallback minimal si aucun détail
+        selected.value.push(itemData)
       }
     }
     calcQty()
@@ -1134,973 +1624,24 @@ function selectDetails(isUpd, index) {
   }
 }
 
-
-
-function handleScroll() {
-  if (buyNowRef.value) {
-    const rect = buyNowRef.value.getBoundingClientRect()
-    const margin = 300 // plus la marge est grande, plus tôt le bouton disparaît
-
-    // Affiche le bouton sticky uniquement si on est encore loin de la cible
-    isSticky.value = rect.top > margin || rect.bottom < 0
+function calcQty() {
+  order.value.qty = 0
+  for(var s of selected.value) {
+    order.value.qty += s.qty
   }
-}
-
-
-
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-})
-
-
-const order = ref({
-  nom: '',
-  telephone: '',
-  wilaya: '',
-  adresse: '',
-  municipality: '',
-  qty: 1,
-  note: '',
-  discount: ''
-})
-
-const deliveryFees = ref([])
-const selectedFees = ref([])
-const wilayas = ref([])
-var selectedWilaya = ref()
-var selectedMunicipality = ref()
-
-var prixFees = ref()
-var prixQty = ref()
-var prixTotal = ref()
-
-
-function setWilaya(wil) {
-  if(wil.wilaya_name) {
-    selectedWilaya.value = wil.wilaya_name
-    if(deliveryMethod.value === 'custom') {
-      for(var i = 0; i < deliveryFees.value.length; i++) {
-        if (deliveryFees.value[i].wilaya_id === wil.wilaya_id) {
-
-          selectedFees.value = deliveryFees.value[i]
-
-          break
-        }
-        
-      }
-    }
-    getCommune(wil)
-    
-
-  }
-  
-}
-
-function setCommune(com) {
-
-
-  if(com.nom) {
-    selectedMunicipality.value = com.nom
-  } else {
-    selectedMunicipality.value = com.name
-  }
-  if(!com.has_stop_desk) {
-    isDesk.value = false
-  } else {
-    isDesk.value = true
-  }
-  getDeliveryFees(com.wilaya_id)
-
-  for(var index in deliveryFees.value) {
-    if(deliveryFees.value[index].wilaya_id === com.wilaya_id) {
-      selectedFees.value = deliveryFees.value[index]
-      break
-    }
-    
-  }
-
-  calculerPrix();
-  
-  
-}
-
-
-function addQtySelect (i) {
-  selected.value[i].qty++;
-  calcQty()
-}
-async function removeQtySelect (i) {
-  if(selected.value[i] && selected.value[i].qty > 1) {
-    selected.value[i].qty--;
-  } else if (i > 0) {
-    
-
-    await new Promise(resolve => setTimeout(resolve, 100)); // pause de 0.5s
-    selectedQty.value = i - 1;
-    selected.value.splice(i, 1);
-  }
-
-  calcQty()
-  
-}
-
-function calculerPrix() {
-  
-  if(selectedWilaya.value) {
-    
-    if (deliveryIndex.value === 0 && selectedFees.value.tarif) {
-      prixFees.value = parseFloat(selectedFees.value.tarif)
-    } else if (deliveryIndex.value != 0 && selectedFees.value.tarif_stopdesk) {
-      prixFees.value = parseFloat(selectedFees.value.tarif_stopdesk)
-    } else if (deliveryIndex.value === 0 && selectedFees.value.express_home) {
-      prixFees.value = parseFloat(selectedFees.value.express_home)
-    } else if (deliveryIndex.value != 0 && selectedFees.value.express_desk) {
-      prixFees.value = parseFloat(selectedFees.value.express_desk)
-    }
-
-    prixQty.value = 0
-    for(var i of selected.value) {
-      if(i.promo && i.promo != 0) {
-        prixQty.value += i.promo * i.qty
-      } else {
-        prixQty.value += i.total * i.qty
-      }
-      
-    }
-    //prixQty.value = order.value.qty * productList.value[indexed.value].models[productIndex.value].sell
-    prixTotal.value = prixQty.value + prixFees.value
-  }
-
-
-}
-
-function setDelivery(i) {
-  deliveryIndex.value = i
-  
-  setUpMethod(selectedWilaya.value)
-  
-  
-  calculerPrix()
-}
-
-
-function submitOrder() {
-  productClick()
-  saveOrder()
-  
-  // Tu peux ensuite faire un fetch vers ton backend ici si tu veux enregistrer la commande
-}
-
-function clearSizeColor() {
-  colors.value = []
-  sizes.value = []
-}
-
-function setColor(index) {
-  colorIndex.value = index
-  selectedColor.value = colors.value[index]
-  selectDetails(true, selectedQty.value)
-  
-}
-
-function setSize(index) {
-  sizeIndex.value = index
-  selectedSize.value = sizes.value[index]
-  selectDetails(true, selectedQty.value)
-}
-
-
-async function getDelivery() {
-  
-  /*
-    try {
-    const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getUpsWilaya')
-
-    if (!response.ok) {
-      console.error('Erreur lors de la récupération des produits:', response.statusText)
-      return
-    }
-
-    const result = await response.json()
-    wilayas.value = result
-    console.log('wilayas.value: ', wilayas.value)
-    
-  } catch (error) {
-    console.error('Une erreur est survenue:', error)
-  }
-*/
-  await getStoreDelivery()
-
-  try {
-    const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getDeliveryMethod')
-
-    if (!response.ok) {
-      console.error('Erreur lors de la récupération des produits:', response.statusText)
-      return
-    }
-
-    const result = await response.json()
-    var myWilaya
-    
-    for(var d in result.data) {
-
-      if(result.data[d].delivery_name === deliveryMethod.value) {
-        myWilaya = JSON.parse(result.data[d].delivery_info)
-        
-        break
-      }
-      
-    }
-
-    for(var i = 0; i < myWilaya.length; i++) {
-      if (myWilaya[i].wilaya_active && deliveryMethod.value === 'ups' && deliveryMethod.value !== 'anderson') {
-          wilayas.value.push({wilaya_id: myWilaya[i].wilaya_id, wilaya_name: myWilaya[i].wilaya_name, desk_method: myWilaya[i].delivery_desk, home_method: myWilaya[i].delivery_home})
-
-          deliveryFees.value.push({wilaya_id: myWilaya[i].wilaya_id, tarif: myWilaya[i].home_price, tarif_stopdesk: myWilaya[i].desk_price, desk_active: myWilaya[i].desk_active, home_active: myWilaya[i].home_active})
-        } else {
-          wilayas.value.push({wilaya_id: myWilaya[i].id, wilaya_name: myWilaya[i].name, desk_method: myWilaya[i].delivery_desk, home_method: myWilaya[i].delivery_home})
-
-          deliveryFees.value.push({wilaya_id: myWilaya[i].id, tarif: myWilaya[i].home_price, tarif_stopdesk: myWilaya[i].desk_price, desk_active: myWilaya[i].desk_active, home_active: myWilaya[i].home_active})
-        }
-      
-    }
-
-    
-  } catch (error) {
-    console.error('Une erreur est survenue:', error)
-  }
-}
-
-async function getCommune(wilaya) {
-  if(wilaya.home_method != 'custom')  {
-    selectedWilaya.value = wilaya
-    const id = {
-      wilaya_id: wilaya.wilaya_id
-    };
-    var response
-    var result
-    if(wilaya.home_method  === 'ups') {
-      response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=getCommune", {
-        method: "POST",
-        body: JSON.stringify(id)
-      });
-      result = await response.json();
-    } else if (wilaya.home_method  === 'anderson') {
-      response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=getAndersonCommune", {
-        method: "POST",
-        body: JSON.stringify(id)
-      });
-      result = await response.json();
-    } else if (wilaya.home_method  === 'yalidine') {
-      response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=getYalidineCommune", {
-        method: "POST",
-        body: JSON.stringify(id)
-      });
-      result = await response.json();
-    } else if (wilaya.home_method  === 'guepex') {
-      response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=getGuepexCommune", {
-        method: "POST",
-        body: JSON.stringify(id)
-      });
-      result = await response.json();
-    }
-    try {
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-                
-      municipalitys.value = result
-      
-      //selectedFees.value = deliveryFees.value[wilaya.wilaya_id - 1]
-
-      if(municipalitys.value.data) {
-        setCommune(municipalitys.value.data.data[0])
-        municipalitys.value = result.data.data
-      } else {
-        setCommune(municipalitys.value[0])
-      }
-    
-    } catch (error) {
-      console.error('Une erreur est survenue:', error)
-    }
-  }
-
-}
-
-function setUpMethod(id) {
-
-  for(var index in deliveryFees.value) {
-    if(deliveryFees.value[index].wilaya_id === id) {
-      delIndex.value = index
-      break
-    }
-    
-  }
-  for(var index2 in wilayas.value) {
-    if(wilayas.value[index2].wilaya_id === id) {
-      wilIndex.value = index2
-      break
-    }
-    
-  }
-
-  if(wilayas.value[wilIndex.value].home_method && !deliveryIndex.value) {
-    deliveryMethod.value = wilayas.value[wilIndex.value].home_method
-  } else if(wilayas.value[wilIndex.value].desk_method && deliveryIndex.value) {
-    deliveryMethod.value = wilayas.value[wilIndex.value].desk_method
-  }
-
-}
-
-async function getDeliveryFees(id) {
-
-  var response
-  var result
-  //i hope i can touch you ther
-  //the secret place i want to see, to touch
-  //i can't believe my head my heart
-  //all my sensation standing up
-  //give me pleas this little thing
-  //forgive me my room
-  //i can't hear you any more, i can't hear you any moooooore, any more
-
-  
-
-  setUpMethod(id)
-  
-
-  if(deliveryMethod.value === 'ups') {
-    try {
-      response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getUpsFees')
-    } catch (e) {
-      console.error(e)
-    }
-    if (!response.ok) {
-      console.error(response.statusText)
-      return
-    }
-    result = await response.json()
-
-    if(deliveryFees.value[delIndex.value]['desk_active']) {
-      if(!deliveryFees.value[delIndex.value]['tarif_stopdesk']) {
-        for(let res of result['livraison']) {
-          if(res.wilaya_id === deliveryFees.value[delIndex.value]['wilaya_id']) {
-            deliveryFees.value[delIndex.value]['tarif_stopdesk'] = res['tarif_stopdesk']
-            break
-          }
-        }
-      }
-    }
-    if(deliveryFees.value[delIndex.value]['home_active']) {
-      if(!deliveryFees.value[delIndex.value]['tarif']) {
-        for(let res of result['livraison']) {
-          if(res.wilaya_id === deliveryFees.value[delIndex.value]['wilaya_id']) {
-            deliveryFees.value[delIndex.value]['tarif'] = res['tarif']
-            break
-          }
-        }
-      }
-    }
-    
-  } else if(deliveryMethod.value === 'anderson') {
-    try {
-      response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getAndersonFees')
-    } catch (e) {
-      console.log(e)
-    }
-    if (!response.ok) {
-      console.error(response.statusText)
-      return
-    }
-    result = await response.json()
-
-    if(deliveryFees.value[delIndex.value]['desk_active']) {
-      if(!deliveryFees.value[delIndex.value]['tarif_stopdesk']) {
-        for(let res of result['livraison']) {
-          if(res.wilaya_id === deliveryFees.value[delIndex.value]['wilaya_id']) {
-            deliveryFees.value[delIndex.value]['tarif_stopdesk'] = res['tarif_stopdesk']
-            break
-          }
-        }
-      }
-    }
-    if(deliveryFees.value[delIndex.value]['home_active']) {
-      if(!deliveryFees.value[delIndex.value]['tarif']) {
-        for(let res of result['livraison']) {
-          if(res.wilaya_id === deliveryFees.value[delIndex.value]['wilaya_id']) {
-            deliveryFees.value[delIndex.value]['tarif'] = res['tarif']
-            break
-          }
-        }
-      }
-    }
-  } else if(deliveryMethod.value === 'yalidine') {
-    
-    const response = await fetch(`https://zoxcom.pietycloth.com/backend/api.php?action=getYalidineFees&wilaya_id=${selectedWilaya.value['wilaya_id']}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-
-    result = await response.json()
-
-    if(deliveryFees.value[delIndex.value]['desk_active']) {
-      if(!deliveryFees.value[delIndex.value]['tarif_stopdesk']) {
-        for(let res in result.data.per_commune) {
-          if(result.data.per_commune[res].commune_name === selectedMunicipality.value) {
-            deliveryFees.value[delIndex.value]['tarif_stopdesk'] = result.data.per_commune[res]['express_desk']
-            break
-          }
-        }
-      }
-    }
-    if(deliveryFees.value[delIndex.value]['home_active']) {
-      if(!deliveryFees.value[delIndex.value]['tarif']) {
-        for(let res in result.data.per_commune) {
-          if(result.data.per_commune[res].commune_name === selectedMunicipality.value) {
-            deliveryFees.value[delIndex.value]['tarif'] = result.data.per_commune[res]['express_home']
-            break
-          }
-        }
-      }
-    }
-
-  } else if (deliveryMethod.value === 'guepex') {
-    try {
-      response = await fetch(`https://zoxcom.pietycloth.com/backend/api.php?action=getGuepexFees&wilaya_id=${selectedWilaya.value['wilaya_id']}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      }
-    });
-    } catch (e) {
-      console.log(e)
-    }
-
-    result = await response.json()
-
-    if(deliveryFees.value[delIndex.value]['desk_active']) {
-      if(!deliveryFees.value[delIndex.value]['tarif_stopdesk']) {
-        for(let res in result.data.per_commune) {
-          if(result.data.per_commune[res].commune_name === selectedMunicipality.value) {
-            deliveryFees.value[delIndex.value]['tarif_stopdesk'] = result.data.per_commune[res]['express_desk']
-            break
-          }
-        }
-      }
-    }
-    if(deliveryFees.value[delIndex.value]['home_active']) {
-      if(!deliveryFees.value[delIndex.value]['tarif']) {
-        for(let res in result.data.per_commune) {
-          if(result.data.per_commune[res].commune_name === selectedMunicipality.value) {
-            deliveryFees.value[delIndex.value]['tarif'] = result.data.per_commune[res]['express_home']
-            break
-          }
-        }
-      }
-    }
-  }
-
-  
-  //deliveryFees.value = result['livraison']
-    
-
-}
-
-
-function setCatalog(index) {
-  catalogIndex.value = index
-  productList.value[indexed.value].image = productList.value[indexed.value].catalog[index].image
-}
-
-function setModel(index) {
-
-  productIndex.value = index
-
-  indexed.value = productList.value.findIndex(item => item.id === route.params.id)
-
-    found.value = indexed.value !== -1
-    if(indexed.value !== -1) {
-      clearSizeColor()
-        for(var ii = 0; ii < productList.value[indexed.value].models[index].details.length; ii++) {
-          if (colors.value) {
-            const colorIndex = colors.value.findIndex(item => item.color === productList.value[indexed.value].models[index].details[ii].color)
-            const sizeIndex = sizes.value.findIndex(item => item.size === productList.value[indexed.value].models[index].details[ii].size)
-            if (colorIndex === -1) {
-              colors.value.push({
-                modelIndex: index,
-                index: ii,
-                color_name: productList.value[indexed.value].models[index].details[ii].colorName,
-                color: productList.value[indexed.value].models[index].details[ii].color
-              })
-            }
-            if (sizeIndex === -1) {
-                sizes.value.push({
-                modelIndex: index,
-                index: ii,
-                size: productList.value[indexed.value].models[index].details[ii].size
-              })
-            }
-          }else {
-            colors.value.push({
-              modelIndex: index,
-              index: ii,
-              color_name: productList.value[indexed.value].models[index].details[ii].colorName,
-              color: productList.value[indexed.value].models[index].details[ii].color
-              
-            })
-            sizes.value.push({
-              modelIndex: index,
-              index: ii,
-              size: productList.value[indexed.value].models[index].details[ii].size
-            })
-          }
-
-      }
-      
-    }
-
-    setColor(0)
-    setSize(0)
-    
-    calculerPrix()
-}
-
-async function getProducts() {
-  isUpdating.value = true
-  try {
-    const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getProducts')
-
-    if (!response.ok) {
-      console.error('Erreur lors de la récupération des produits:', response.statusText)
-      return
-    }
-
-    const result = await response.json()
-    for(var i = 0; i < result.data.length; i++) {
-      result.data[i].catalog = [{ image: result.data[i].image }, ...result.data[i].catalog];
-    }
-    productList.value = result.data
-
-    setModel(productIndex.value)
-
-    if(productList.value[indexed.value].youtubeUrl) {
-      productList.value[indexed.value].catalog = [
-        {image: 'https://img.freepik.com/vecteurs-premium/logo-rond-youtube-isole-fond-blanc_469489-983.jpg?semt=ais_hybrid&w=740'},
-        ...productList.value[indexed.value].catalog
-      ]
-
-
-      setCatalog(0)
-    }
-
-  } catch (error) {
-    console.error('Une erreur est survenue:', error)
-  } finally {
-    isUpdating.value = false
-  }
-}
-
-
-async function saveOrder() {
-  isUpdating.value = true;
-
-  if (!selectedWilaya.value) {
-    isUpdating.value = false;
-    alert("يرجى اختيار الولاية")
-    return
-  }
-  if (!order.value.nom) {
-    isUpdating.value = false;
-    alert("يرجى إدخال الاسم الكامل")
-    return
-  }
-  if (!order.value.telephone) {
-    isUpdating.value = false;
-    alert("يرجى إدخال رقم الهاتف")
-    return
-  }
-  if (!order.value.municipality) {
-    isUpdating.value = false;
-    alert("يرجى اختيار البلدية")
-    return
-  }
-
-  
-  //saveLog.value = 'Saving order, please wait...';
-  /*if (!name.value || !phone.value || !qty.value || !country.value || !method.value.name) {
-      saveLog.value = 'Please fill in all required fields.';
-      return;
-  }*/
-  const model = productList.value[indexed.value].models[productIndex.value]
-  const details = productList.value[indexed.value].models[productIndex.value].details
-
-
-  if(model.aColor == 1) {
-    if(!selectedColor.value) {
-      if(details) {
-        selectedColor.value = details[0].color
-      } else {
-        selectedColor.value = ''
-      }
-      
-    }
-  } else {
-    selectedColor.value = ''
-  }
-
-  if(model.aSize == 1) {
-    if(!selectedSize.value) {
-      if(details) {
-        selectedSize.value = details[0].size
-      } else {
-        selectedSize.value = ''
-      }
-    }
-  } else {
-    selectedSize.value = ''
-  }
-
-  
-
-  const selectedModel = []
-  for(var m of selected.value) {
-    selectedModel.push({
-    
-      name: m.modal_name, 
-      image: m.catalog_image, 
-      qty: 1,
-      price: parseFloat(m.total),
-      ref: model.ref,
-      indexD: productIndex.value,
-      details: [model],
-      total: parseFloat(m.total),
-      idP: indexed.value,
-      idM: m.indx ?? 0,
-      selected: [{
-        color: m.color, 
-        colorName: m.colorName, 
-        size: m.size,
-        id: m.id, 
-        indx: m.indx ?? 0,
-        total: m.total,
-        promo: m.promo,
-        qty: m.qty
-      }]
-    })
-  }
-
-
-  var zone1 = false
-  var zone2 = false
-
-  if(deliveryIndex.value === 0) {
-    zone1 = true
-    zone2 = false
-  } else {
-    zone1 = false
-    zone2 = true
-  }
-
-  if (Array.isArray(selectedWilaya.value)) {
-    order.value.wilaya = selectedWilaya.value[0]?.wilaya_name || ''
-  } else if (typeof selectedWilaya.value === 'object' && selectedWilaya.value !== null) {
-    order.value.wilaya = selectedWilaya.value.wilaya_name
-  } else {
-    order.value.wilaya = selectedWilaya.value
-  }
-
-  if (Array.isArray(selectedMunicipality.value)) {
-    order.value.municipality = selectedMunicipality.value[0]?.nom || ''
-  } else if (typeof selectedMunicipality.value === 'object' && selectedMunicipality.value !== null) {
-    order.value.municipality = selectedMunicipality.value.nom
-  } else {
-    order.value.municipality = selectedMunicipality.value
-  }
-
-
-  const orderData = {
-      data_time: Math.floor(Date.now() / 1000),
-      name: order.value.nom,
-      phone: order.value.telephone,
-      qty: order.value.qty,
-      country: 'algeria',
-      method: deliveryMethod.value,
-      select: order.value.wilaya,
-      deliveryValue: `${prixFees.value} DA`,
-      type: zone1 ? "0" : zone2 ? "1" : "",
-      zone1: zone1,
-      zone2: zone2,
-      sZone: order.value.municipality,
-      mZone: order.value.adresse,
-      discount: order.value.discount,
-      discountValue: discount.value,
-      note: order.value.note,
-      total: prixTotal.value,
-      selectedProd: selectedModel,
-  };
-  //saveLog.value = 'Saving order, please wait for response...';
-  try {
-      const response = await fetch("https://zoxcom.pietycloth.com/backend/api.php?action=postOrder", {
-          method: "POST",
-          body: JSON.stringify(orderData)
-      });
-      
-      if (!response.ok) {
-        isUpdating.value = false;
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const result = await response.json()
-      
-      
-
-      if (result.success) {
-        isUpdating.value = false;
-        // ✅ Envoie l'événement d'achat à Facebook
-        if (typeof window.fbq === 'function') {
-          window.fbq('track', 'Purchase', {
-          value: prixTotal.value,
-          currency: 'DZD',
-          contents: selectedModel.map(item => ({
-            id: item.ref || item.idP || 'product-id',
-            quantity: item.qty,
-            item_price: item.price
-          })),
-          content_type: 'product'
-        });
-        }
-        
-
-        router.push(`/thenks/${result.data}`); // ← Redirection avec ID
-      } else {
-        isUpdating.value = false;
-        alert("order not saved correctly")
-      }
-  } catch (error) {
-    isUpdating.value = false;
-    console.error('Error:', error);
-    //saveLog.value = `Error: ${error.message}`;
-  }
-
-}
-
-async function testDiscount() {
-  
-  if (order.value.discount) {
-      const postBody = JSON.stringify({
-          code: order.value.discount,
-          time: Math.floor(Date.now() / 1000),
-          phone: order.value.telephone
-      });
-      
-      prixTotal.value = prixQty.value + parseFloat(prixFees.value);
-
-      const response2 = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=testDiscount', {
-      method: 'POST',
-      body: postBody,
-      });
-      if(!response2.ok){
-          disLog.value = "error in response";
-          return;
-      }
-      const textResponse = await response2.json();  // Récupérer la réponse en texte
-      if (textResponse.success) {
-          var type = '';
-          if(textResponse.message === '1' && prixQty.value) {
-              if(textResponse.data.type === 0) {
-                  type = '%';
-                  discount.value = {value: parseFloat(textResponse.data.value), type: textResponse.data.type};
-                  prixTotal.value -= (prixQty.value / 100) * parseFloat(discount.value.value);
-              } else {
-                  type = 'DA';
-                  discount.value = {value: parseFloat(textResponse.data.value), type: textResponse.data.type};
-                  prixTotal.value -= parseFloat(discount.value.value);
-              }
-              discountV.value = `${textResponse.data.value} ${type}`;
-              disLog.value = `CODE : - ${textResponse.data.value} ${type}`;
-              isSuccess.value = 1
-          } else {
-              if (textResponse.message === '1') {
-                      if(textResponse.data.type === 0) {
-                      type = '%';
-                      discount.value = {value: parseFloat(textResponse.data.value), type: textResponse.data.type};
-                      prixTotal.value -= (prixQty.value / 100) * parseFloat(discount.value.value);
-                  } else {
-                      type = 'DA';
-                      discount.value = {value: parseFloat(textResponse.data.value), type: textResponse.data.type};
-                      prixTotal.value -= parseFloat(discount.value.value);
-                  }
-                  discountV.value = `${textResponse.data.value} ${type}`;
-                  disLog.value = `CODE : - ${textResponse.data.value} ${type}`;
-                  isSuccess.value = 1
-              } else if (textResponse.message === '2') {
-                  disLog.value = 'لقد إنتهت مدة الصلحية';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '3') {
-                  disLog.value = 'لقد إستعملت الرمز بهاتفك';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '4') {
-                  disLog.value = 'لقد إنتهت صلحية الرمز';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '5') {
-                  disLog.value = 'رمز غير صالح';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '6') {
-                  disLog.value = 'رمز غير متوفر';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '7') {
-                  disLog.value = 'رقم الهاتف مهم';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '8') {
-                  disLog.value = 'معذرة لا يوجد رمز ترويجي';
-                  isSuccess.value = 0
-              }
-          }
-        
-
-      } else {
-          if (textResponse.message === '2') {
-                  disLog.value = 'لقد إنتهت مدة الصلحية'
-                  isSuccess.value = 0
-              } else if (textResponse.message === '3') {
-                  disLog.value = 'لقد إستعملت الرمز بهاتفك';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '4') {
-                  disLog.value = 'لقد إنتهت صلحية الرمز';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '5') {
-                  disLog.value = 'رمز غير صالح';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '6') {
-                  disLog.value = 'رمز غير متوفر';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '7') {
-                  disLog.value = 'رقم الهاتف مهم';
-                  isSuccess.value = 0
-              } else if (textResponse.message === '8') {
-                  disLog.value = 'معذرة لا يوجد رمز ترويجي';
-                  isSuccess.value = 0
-              }
-                  
-      }
-  } else {
-      //order.value.discount = 0;
-      //updateTotal();
-      disLog.value = 'لا يوجد أي رمز';
-      isSuccess.value = 0
-  }
-
-
-}
-
-
-const getStoreDelivery = async () => {
-
-
-  //isSaving.value = true
-
-  const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getStoreDelivery', {
-    method: 'GET',
-  });
-
-  if (!response.ok) {
-    return;
-  }
-
-  const textResponse = await response.json();
-
-  if (textResponse.success) {
-    
-    for (var dev of textResponse.data) {
-      if(dev.name === 'Clothing of Piety') {
-        deliveryMethod.value = dev.method
-      }
-
-      break
-    }
-
-  }
-
-
-
-}
-
-const getCustomer = async () => {
-
-
-  //isSaving.value = true
-
-  const response = await fetch('https://zoxcom.pietycloth.com/backend/api.php?action=getCustomer', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({ phone: `${order.value.telephone}` })
-  });
-
-  if (!response.ok) {
-    console.error(response)
-    return;
-  }
-
-  const textResponse = await response.json();
-
-  if (textResponse.success) {
-    const customer = textResponse.data[0]
-    if(customer.name) {
-      order.value.nom = customer.name
-      
-      order.value.adresse = customer.items[0].mZone
-      await getDelivery()
-      for (var wil of wilayas.value) {
-        if (
-          normalizeString(wil.wilaya_name) === normalizeString(customer.items[0].delivery_zone)
-        ) {
-          
-          order.value.wilaya = wil
-          setWilaya(order.value.wilaya)
-          await getCommune(order.value.wilaya)
-          for(var mun of municipalitys.value) {
-            if(customer.items[0].sZone === mun.nom) {
-              
-              order.value.municipality = mun
-              setCommune(mun)
-              
-            }
-          }
-          
-          break // on arrête dès qu'on trouve
-        }
-      }
-      
-      
-      
-      calculerPrix()
-    }
-
-
-  }
-
 }
 
 function normalizeString(str) {
   return str
     .toString()
-    .normalize("NFD")              // Sépare les accents
-    .replace(/[\u0300-\u036f]/g, "") // Supprime les accents
-    .trim()                       // Enlève les espaces
-    .toLowerCase()               // Minuscule
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim()
+    .toLowerCase()
 }
-
-
-
 </script>
 
-<style>
+<style scoped>
 
 :root {
   --dark-color: #161616;
