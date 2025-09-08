@@ -1354,30 +1354,31 @@ async function getDelivery() {
 }
 
 async function getCommune(wilaya) {
-  if (wilaya.home_method === 'custom') {
-    municipalitys.value = [];
-    return;
-  }
-  selectedWilaya.value = wilaya;
+  if(wilaya.home_method != 'custom')  {
+    selectedWilaya.value = wilaya
+    const id = {
+      wilaya_id: wilaya.wilaya_id
+    };
 
-  const communeActions = {
-    ups: 'getCommune',
-    anderson: 'getAndersonCommune',
-    yalidine: 'getYalidineCommune',
-    guepex: 'getGuepexCommune',
-  };
+    const communeActions = {
+      ups: 'getCommune',
+      anderson: 'getAndersonCommune',
+      yalidine: 'getYalidineCommune',
+      guepex: 'getGuepexCommune',
+    };
+    const action = communeActions[wilaya.home_method];
+    if (!action) return;
 
-  const action = communeActions[wilaya.home_method];
-  if (!action) return;
+    const result = await post(action, id);
 
-  const result = await post(action, { wilaya_id: wilaya.wilaya_id });
-
-  if (result) {
-    const communes = result.data?.data || result;
-    municipalitys.value = communes;
-
-    if (communes && communes.length > 0) {
-      setCommune(communes[0]);
+    if (result) {
+      municipalitys.value = result
+      if(municipalitys.value.data) {
+        setCommune(municipalitys.value.data.data[0])
+        municipalitys.value = result.data.data
+      } else {
+        setCommune(municipalitys.value[0])
+      }
     }
   }
 }
