@@ -1,0 +1,12 @@
+# Activer la réécriture d'URL
+RewriteEngine On
+
+# Assurez-vous que la réécriture fonctionne sur Apache
+RewriteBase /
+
+# Si la requête est pour un fichier ou un répertoire existant, ne pas faire de réécriture
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Rediriger toutes les autres requêtes vers index.html
+RewriteRule ^ index.html [QSA,L]
