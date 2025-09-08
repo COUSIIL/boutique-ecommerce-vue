@@ -569,7 +569,17 @@
 
             <div class="formInput">
             
-              <input v-model="order.telephone" type="tel" inputmode="numeric" pattern="[0-9]*" class="w-full p-2 border rounded" required @blur="getCustomer"/>
+              <input 
+                v-model="order.telephone" 
+                type="tel" 
+                inputmode="numeric" 
+                maxlength="10"
+                class="w-full p-2 border rounded" 
+                required 
+                @blur="getCustomer"
+                @input="order.telephone = order.telephone.replace(/\D/g, '')"
+              />
+
               <label class="block text-sm font-medium">
                 
                 {{ language.arabic.phone }}
@@ -833,7 +843,7 @@ const { execute: getAndersonFees, loading: andersonFeesLoading } = useApi('getAn
 const { execute: getYalidineFees, loading: yalidineFeesLoading } = useApi('getYalidineFees')
 const { execute: getGuepexFees, loading: guepexFeesLoading } = useApi('getGuepexFees')
 const { execute: getStoreDelivery, loading: storeDeliveryLoading } = useApi('getStoreDelivery')
-const { execute: getCustomerApi, data: customerResult, loading: customerLoading } = useApi('getCustomer', { method: 'POST' })
+const { execute: getCustomerApi, data: customerResult } = useApi('getCustomers', { method: 'POST' })
 const { execute: testDiscountApi, data: discountResult, loading: discountLoading } = useApi('testDiscount', { method: 'POST' })
 const { execute: postOrder, data: orderResult, loading: orderLoading } = useApi('postOrder', { method: 'POST' })
 const { execute: productClick } = useApi('productClick', { method: 'POST' })
@@ -887,7 +897,6 @@ const isUpdating = computed(() => {
     yalidineFeesLoading.value ||
     guepexFeesLoading.value ||
     storeDeliveryLoading.value ||
-    customerLoading.value ||
     discountLoading.value ||
     orderLoading.value
 })

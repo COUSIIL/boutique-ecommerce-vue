@@ -26,11 +26,15 @@ export function useApi(action, options = {}) {
 
       const response = await fetch(url, fetchOptions);
 
+      
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
       data.value = await response.json();
+
+      console.log('data.value: ', data.value)
     } catch (e) {
       error.value = e.message;
     } finally {
