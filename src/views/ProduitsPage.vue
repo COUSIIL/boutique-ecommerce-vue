@@ -309,7 +309,16 @@
 
                   <div class="formInput">
                   
-                    <input v-model="order.telephone" type="tel" class="w-full p-2 border rounded" required @blur="getCustomer"/>
+                    <input 
+                      v-model="order.telephone" 
+                      type="tel" 
+                      inputmode="numeric" 
+                      maxlength="10"
+                      class="w-full p-2 border rounded" 
+                      required 
+                      @blur="getCustomer"
+                      @keypress="onlyNumber"
+                    />
                     <label class="block text-sm font-medium">
                       
                       {{ language.arabic.phone }}
@@ -577,8 +586,10 @@
                 class="w-full p-2 border rounded" 
                 required 
                 @blur="getCustomer"
-                @input="order.telephone = order.telephone.replace(/\D/g, '')"
+                @keypress="onlyNumber"
               />
+
+
 
               <label class="block text-sm font-medium">
                 
@@ -944,6 +955,13 @@ const videoId = computed(() => {
   return url
 })
 
+function onlyNumber($event) {
+  if (!/[0-9]/.test($event.key)) {
+    $event.preventDefault()
+  }
+}
+
+
 
 function scrollToBuyNow() {
   buyNowRef.value?.scrollIntoView({ behavior: 'smooth' })
@@ -1220,7 +1238,6 @@ function setCommune(com) {
   } else {
     isDesk.value = true
   }
-  console.log('com.wilaya_id: ', com.wilaya_id)
   getDeliveryFees(com.wilaya_id)
 
   for(var index in deliveryFees.value) {
@@ -1353,7 +1370,6 @@ async function getDelivery() {
 
     const result = await response.json()
     var myWilaya
-    console.log(result.data)
     for(var d in result.data) {
       console.log(result.data[d].delivery_name, ' ', deliveryMethod.value)
       if(result.data[d].delivery_name === deliveryMethod.value) {
@@ -1365,13 +1381,15 @@ async function getDelivery() {
       
     }
 
-    console.log({myWilaya})
-
     for(var i = 0; i < myWilaya.length; i++) {
-      if(myWilaya[i].wilaya_active) {
+      if(myWilaya[i].wilaya_active && myWilaya[i].wilaya_name && myWilaya[i].wilaya_id) {
           wilayas.value.push({wilaya_id: myWilaya[i].wilaya_id, wilaya_name: myWilaya[i].wilaya_name, desk_method: myWilaya[i].delivery_desk, home_method: myWilaya[i].delivery_home})
-          console.log('myWilaya[i]: ', myWilaya[i])
+
           deliveryFees.value.push({wilaya_id: myWilaya[i].wilaya_id, tarif: myWilaya[i].home_price, tarif_stopdesk: myWilaya[i].desk_price, desk_active: myWilaya[i].desk_active, home_active: myWilaya[i].home_active})
+        } else if(myWilaya[i].wilaya_active && myWilaya[i].name && myWilaya[i].id) {
+          wilayas.value.push({wilaya_id: myWilaya[i].id, wilaya_name: myWilaya[i].name, desk_method: myWilaya[i].delivery_desk, home_method: myWilaya[i].delivery_home})
+
+          deliveryFees.value.push({wilaya_id: myWilaya[i].id, tarif: myWilaya[i].home_price, tarif_stopdesk: myWilaya[i].desk_price, desk_active: myWilaya[i].desk_active, home_active: myWilaya[i].home_active})
         }
       
     }
@@ -2072,6 +2090,7 @@ const getCustomer = async () => {
         ) {
           
           order.value.wilaya = wil
+          console.log({wil})
           setWilaya(order.value.wilaya)
           await getCommune(order.value.wilaya)
           for(var mun of municipalitys.value) {
